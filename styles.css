@@ -1,0 +1,56 @@
+nav{
+    background-color: #FFC947;
+    height: 70px;
+}
+.navbar{
+    font-family: 'Raleway', sans-serif;
+    padding:0 80px;
+    color: #0A1931;
+    line-height: 70px;
+    font-size: 40px;
+ 
+}
+body{
+    background-color: #0A1931;
+    margin: 0px;
+}
+main{
+    margin: 0 10rem;
+}
+nav ul{
+    float: right;
+    margin-right: 20px;
+}
+nav ul li{
+    display: inline-block;
+    margin: 0 5px;
+    line-height: 35px;
+}
+nav ul li a{
+    font-family: 'Raleway', sans-serif;
+    color:#0A1931;
+    font-size: 20px;
+    border-radius: 3px;
+    text-decoration: none;
+}
+a:hover{
+    background-color: #0A1931;
+    color:#FFC947;
+    transition: o.5s;
+}
+.pic{
+ height: 250px;
+ border-radius: 100%;
+}
+.general{
+    font-family: 'Playfair Display', serif;
+    color: #ffffff;
+    font-size: 20px;
+    }
+#SKILLS{
+    margin-left: 200px;
+}
+
+.edit{
+    margin-left: 50px;
+}
