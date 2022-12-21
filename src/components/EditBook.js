@@ -1,8 +1,9 @@
 import { Link } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 import swal from "sweetalert";
-function AddBooks() {
+function EditBook(props) {
+    const navigate = useNavigate();
     const [bookInput, setBook] = useState({
         book_name: '',
         author_name: '',
@@ -21,8 +22,19 @@ function AddBooks() {
     const handleImage = (e) => {
         setPicture({ image: e.target.files[0] });
     }
-    const submitBook = (e) => {
+
+    useEffect(() => {
+        const book_isbn = props.match.params.isbn;
+        axios.get(`/api/edit_book/${isbn}`).then(res => {
+            if (res.data.status === 200) {
+                setBook(res.data.book);
+            }
+
+        });
+    }, [props.match.params.isbn]);
+    const updateBook = (e) => {
         e.preventdefault();
+        const book_isbn = props.match.params.isbn;
         const formData = new FormData;
 
         formData.append('image', picture.image);
@@ -33,13 +45,17 @@ function AddBooks() {
         formData.append('selling_price', bookInput.selling_price);
         formData.append('coppies', bookInput.coppies);
 
-        axios.post('/api/books', formData).then(res => {
+        axios.post(`/api/update_book/${book_isbn}`, formData).then(res => {
             if (res.data.status === 200) {
                 swal("Success", res.data.message)
                 setError([]);
             } else if (res.data.status === 422) {
                 swal("All fields are mandetory", "", "error");
                 setError(res.data.errors);
+            }
+            else if (res.data.status === 404) {
+                swal('Eror', res.data.message, "error")
+                navigate("/admin/viewbooks");
             }
         })
     }
@@ -48,11 +64,11 @@ function AddBooks() {
         <div className="container-fluid px-4">
             <div className="card mt-4">
                 <div className="card-header">
-                    <h4>Add Books</h4>
+                    <h4>Edit Book</h4>
                     <Link to="/admin/viewproducts" className="btn btn-primary btn-sm float-end">View Books</Link>
                 </div>
                 <div className="card-body">
-                    <form onSubmit={submitBook} encType="multitype/form-data">
+                    <form onSubmit={updateBook} encType="multitype/form-data">
                         {/* <ul className="nav nav-tabs" id="myTab" role="tablist">
                             <li className="nav-item" role="presentation">
                                 <button className="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home-tab-pane" type="button" role="tab" aria-controls="home-tab-pane" aria-selected="true">Book details and Information</button>
@@ -111,4 +127,4 @@ function AddBooks() {
     );
 };
 
-export default AddBooks;
+export default EditBook;
