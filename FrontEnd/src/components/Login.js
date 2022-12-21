@@ -23,8 +23,9 @@ const Login = () => {
         axios.get('/sanctum/csrf-cookie').then(response => {
             axios.post('/api/login', data).then(res => {
                 if (res.data.status === 200) {
+                    console.log(res.data)
                     localStorage.setItem('auth_token', res.data.token);
-                    localStorage.setItem('auth_name', res.data.username);
+                    localStorage.setItem('auth_name', res.data.First_name);
                     swal("Success", res.data.message, "success");
                     navigate("/")
                 } else if (res.data.status === 401) {

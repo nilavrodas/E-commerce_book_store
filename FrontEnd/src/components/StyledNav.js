@@ -8,17 +8,26 @@ function StyledNav() {
     const logoutSubmit = (e) => {
         e.preventDefault();
         axios.post('/api/logout').then(res => {
-            if (Response.data.status === 200) {
+            if (res.data.status === 200) {
                 localStorage.removeItem('auth_token');
                 localStorage.removeItem('auth_name');
                 swal("Success", res.data.message, "success");
                 navigate("/")
             }
-
+        }).catch(error => {
+            console.log(error)
         });
 
     }
     let authButtons = '';
+    // authButtons = (
+    //     <NavDropdown title="Login/Signup" id="basic-nav-dropdown">
+    //         <NavDropdown.Item href="/login">Login</NavDropdown.Item>
+    //         <NavDropdown.Item href="/signup">
+    //             Signup
+    //         </NavDropdown.Item>
+
+    //     </NavDropdown>)
     if (!localStorage.getItem('auth_token')) {
         authButtons = (
             <NavDropdown title="Login/Signup" id="basic-nav-dropdown">
