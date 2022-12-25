@@ -1,3 +1,4 @@
+//view
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
@@ -7,9 +8,10 @@ function ViewBooks() {
     const [viewBook, setBook] = useState([]);
     const [loading, setLoading] = useState(true);
     useEffect(() => {
-        axios.get('/api/show_book').them(res => {
+        axios.get('/api/Show_Book').then(res => {
             if (res.data.status === 200) {
-                setBook(res.data.book)
+                //console.log(res.data.Book);
+                setBook(res.data.Books)
                 setLoading(false);
             }
         });
@@ -18,7 +20,7 @@ function ViewBooks() {
         e.preventDefault();
         const thisClicked = e.currentTarget;
         thisClicked.innerText = "Deleting";
-        axios.delete(`/api/delete_book/${isbn}`).then(res => {
+        axios.delete(`/api/Delete_Book/${isbn}`).then(res => {
             if (res.data.status === 200) {
                 swal("Success", res.data.message, "success")
                 thisClicked.closest("tr").remove();
@@ -38,7 +40,7 @@ function ViewBooks() {
                 <tr key={item.isbn}>
                     <td>{item.book_name}</td>
                     <td>{item.isbn}</td>
-                    <td>{item.image}</td>
+                    <td><img src={`http://127.0.0.1:8000/${item.image}`} width="50px" alt="Book Cover" /></td>
                     <td>{item.coppies}</td>
                     <td>{item.selling_price}</td>
                     <td>
@@ -70,6 +72,7 @@ function ViewBooks() {
                             </tr>
                         </thead>
                         <tbody>
+
                             {display_book_data}
                         </tbody>
                     </table>

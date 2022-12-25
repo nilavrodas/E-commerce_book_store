@@ -6,6 +6,7 @@ import AddBooks from './components/AddBooks.js';
 import AdminStyledNav from './components/AdminStyledNav.js';
 import ViewBooks from './components/ViewBooks.js';
 import axios from 'axios';
+import EditBook from './components/EditBook.js';
 
 axios.defaults.baseURL = "http://127.0.0.1:8000/";
 axios.defaults.headers.post['Content-Type'] = 'application/json';
@@ -38,8 +39,9 @@ function App() {
           <Outlet />
         </div>}>
           <Route path="addbooks" element={<div><AddBooks /></div>} />
-          <Route path="viewbooks" element={<ViewBooks />} />
-          <Route path="edit_book/:isbn" element={<ViewBooks />} />
+          <Route path="viewbooks" element={<div><ViewBooks /><Outlet /></div>} >
+            <Route path="edit_book/:isbn" element={<EditBook />} />
+          </Route>
         </Route>
       </Routes>
     </BrowserRouter>

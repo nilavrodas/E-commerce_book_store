@@ -26,7 +26,7 @@ function AddBooks() {
     const submitBook = (e) => {
         e.preventDefault();
         console.log("in")
-        const formData = new FormData;
+        const formData = new FormData();
         console.log(bookInput)
         console.log(picture.image)
         formData.append('image', picture.image);

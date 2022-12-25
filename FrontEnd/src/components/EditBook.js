@@ -1,9 +1,11 @@
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import swal from "sweetalert";
+import { useNavigate } from 'react-router-dom';
 function EditBook(props) {
     const navigate = useNavigate();
+    const { isbn } = useParams();
     const [bookInput, setBook] = useState({
         book_name: '',
         author_name: '',
@@ -24,18 +26,20 @@ function EditBook(props) {
     }
 
     useEffect(() => {
-        const book_isbn = props.match.params.isbn;
-        axios.get(`/api/edit_book/${isbn}`).then(res => {
+        const book_isbn = isbn;
+        axios.get(`api/Edit_Book/${book_isbn}`).then(res => {
+            console.log(book_isbn);
+            console.log(res.data);
             if (res.data.status === 200) {
-                setBook(res.data.book);
+                setBook(res.data.Book);
             }
 
         });
-    }, [props.match.params.isbn]);
+    }, [isbn]);
     const updateBook = (e) => {
         e.preventdefault();
-        const book_isbn = props.match.params.isbn;
-        const formData = new FormData;
+        const book_isbn = isbn;
+        const formData = new FormData();
 
         formData.append('image', picture.image);
         formData.append('book_name', bookInput.book_name);
@@ -45,7 +49,7 @@ function EditBook(props) {
         formData.append('selling_price', bookInput.selling_price);
         formData.append('coppies', bookInput.coppies);
 
-        axios.post(`/api/update_book/${book_isbn}`, formData).then(res => {
+        axios.post(`/api/Update_Book/${book_isbn}`, formData).then(res => {
             if (res.data.status === 200) {
                 swal("Success", res.data.message)
                 setError([]);
@@ -75,8 +79,8 @@ function EditBook(props) {
                             </li>
 
                         </ul> */}
-                        <div class="tab-content" id="myTabContent">
-                            <div class="tab-pane fade show active" id="home-tab-pane" role="tabpanel" aria-labelledby="home-tab" tabindex="0">
+                        <div className="tab-content" id="myTabContent">
+                            <div className="tab-pane fade show active" id="home-tab-pane" role="tabpanel" aria-labelledby="home-tab" tabIndex="0">
                                 <div className="form-group mb-3 mt-3 ms-3">
                                     <label className="mb-1">Book Name</label>
                                     <input type="text" name="book_name" className="form-control" onChange={handleInput} value={bookInput.book_name} />
