@@ -25,9 +25,9 @@ const Login = () => {
                 if (res.data.status === 200) {
                     console.log(res.data)
                     localStorage.setItem('auth_token', res.data.token);
-                    localStorage.setItem('auth_name', data.email);
+                    localStorage.setItem('auth_name', res.data.email);
                     swal("Success", res.data.message, "success");
-                    navigate("/home")
+                    navigate("/")
                 } else if (res.data.status === 401) {
                     swal("Warning", res.data.message, "warning");
 

@@ -37,11 +37,11 @@ function ViewBooks() {
         display_book_data = viewBook.map((item) => {
             return (
                 <tr key={item.isbn}>
-                    <td style={{ color: 'white' }}>{item.book_name}</td>
-                    <td style={{ color: 'white' }}>{item.isbn}</td>
-                    <td ><img src={`http://127.0.0.1:8000/${item.image}`} width="50px" alt="Image" /></td>
-                    <td style={{ color: 'white' }}>{item.coppies}</td>
-                    <td style={{ color: 'white' }}>Tk {item.selling_price}</td>
+                    <td>{item.book_name}</td>
+                    <td>{item.isbn}</td>
+                    <td><img src={`http://127.0.0.1:8000/${item.image}`} width="50px" alt="Image" /></td>
+                    <td>{item.coppies}</td>
+                    <td>{item.selling_price}</td>
                     <td>
                         <Link to={`edit_book/${item.isbn}`}>Edit</Link>
                     </td>
@@ -51,23 +51,23 @@ function ViewBooks() {
         });
     }
     return (
-        <div className="card px-4 mt-3" style={{ backgroundColor: '#ffc107' }}>
-            <div >
+        <div className="card px-4 mt-3">
+            <div className="card-header">
                 <h4>View Books</h4>
-
+                <Link to="admin/addbooks" className="btn btn-primary btn-sm float-end"> Add Book</Link>
             </div>
             <div className="card-body">
                 <div className="table-responsive">
                     <table className="table table-bordered table-striped">
                         <thead>
                             <tr>
-                                <th style={{ color: 'white' }}>Book Name</th>
-                                <th style={{ color: 'white' }}>ISBN No.</th>
-                                <th style={{ color: 'white' }}>Image</th>
-                                <th style={{ color: 'white' }}>No. of Coppies</th>
-                                <th style={{ color: 'white' }}>Price</th>
-                                <th style={{ color: 'white' }}>Edit</th>
-                                <th style={{ color: 'white' }}>Delete</th>
+                                <th>Book Name</th>
+                                <th>ISBN No.</th>
+                                <th>Image</th>
+                                <th>No. of Coppies</th>
+                                <th>Selling price</th>
+                                <th>Edit</th>
+                                <th>Delete</th>
                             </tr>
                         </thead>
                         <tbody>

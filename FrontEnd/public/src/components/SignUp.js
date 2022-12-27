@@ -32,7 +32,7 @@ const SignUp = () => {
                     localStorage.setItem('auth_token', res.data.token);
                     localStorage.setItem('auth_name', res.data.email);
                     swal("Success", res.data.message, "success");
-                    navigate("/home");
+                    navigate("/");
                 } else {
                     setInput({ ...input, error_list: res.data.Validation_errors });
                 }

@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import swal from 'sweetalert';
 
 
-const Login = () => {
+const AdminLogin = () => {
     const navigate = useNavigate();
     const [loginInput, setLogin] = useState({
         email: '',
@@ -44,7 +44,7 @@ const Login = () => {
                 <div className="col-10 col-md-8 col-lg-4">
 
                     <form onSubmit={loginSubmit} className="form-example" action="" method="post">
-                        <h1 className="text-center">Customer Login</h1>
+                        <h1 className="text-center">Admin Login</h1>
 
 
                         <div className="form-group ">
@@ -69,4 +69,4 @@ const Login = () => {
     );
 };
 
-export default Login;
+export default AdminLogin;

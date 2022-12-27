@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom';
 function EditBook(props) {
     const navigate = useNavigate();
     const { isbn } = useParams();
+    const book_isbn = isbn;
     const [bookInput, setBook] = useState({
         book_name: '',
         author_name: '',
@@ -13,13 +14,20 @@ function EditBook(props) {
         description: '',
         selling_price: '',
         coppies: '',
+        publisher_name: '',
 
 
     });
+    const [publisherName, setPublisherName] = useState("");
     const [picture, setPicture] = useState([]);
     const [errorlist, setError] = useState([]);
     const handleInput = (e) => {
+        console.log('hello');
+        console.log(e.target.value);
         setBook({ ...bookInput, [e.target.name]: e.target.value });
+        if (e.target.name === 'publisher_name') {
+            setPublisherName(e.target.value)
+        }
     }
     const handleImage = (e) => {
         setPicture({ image: e.target.files[0] });
@@ -32,28 +40,37 @@ function EditBook(props) {
             console.log(res.data);
             if (res.data.status === 200) {
                 setBook(res.data.Book);
+                console.log()
+                setPublisherName(res.data.publisher_name.publisher_name)
+            } else if (res.data.status === 404) {
+                swal("Error", res.data.message, "error");
+                navigate("/admin/viewbooks");
             }
 
         });
     }, [isbn]);
     const updateBook = (e) => {
-        e.preventdefault();
-        const book_isbn = isbn;
+        e.preventDefault();
+        // const book_isbn = isbn;
         const formData = new FormData();
 
         formData.append('image', picture.image);
         formData.append('book_name', bookInput.book_name);
         formData.append('author_name', bookInput.author_name);
-        formData.append('isbn', bookInput.isbn);
+        if (bookInput.isbn === '') { formData.append('isbn', isbn); }
+        else { formData.append('isbn', bookInput.isbn); }
         formData.append('description', bookInput.description);
         formData.append('selling_price', bookInput.selling_price);
         formData.append('coppies', bookInput.coppies);
+        formData.append('publisher_name', bookInput.publisher_name);
 
-        axios.post(`/api/Update_Book/${book_isbn}`, formData).then(res => {
+
+        axios.post(`/api/Update_Book/${isbn}`, formData).then(res => {
+            console.log(res.data);
             if (res.data.status === 200) {
                 swal("Success", res.data.message)
                 setError([]);
-            } else if (res.data.status === 422) {
+            } else if (res.data.status === 442) {
                 swal("All fields are mandetory", "", "error");
                 setError(res.data.errors);
             }
@@ -66,12 +83,12 @@ function EditBook(props) {
 
     return (
         <div className="container-fluid px-4">
-            <div className="card mt-4">
-                <div className="card-header">
+            <div className="card mt-4" >
+                <div className="card-header" style={{ backgroundColor: '#ffc107' }}>
                     <h4>Edit Book</h4>
                     <Link to="/admin/viewproducts" className="btn btn-primary btn-sm float-end">View Books</Link>
                 </div>
-                <div className="card-body">
+                <div className="card-body" style={{ backgroundColor: ' #28282B' }}>
                     <form onSubmit={updateBook} encType="multitype/form-data">
                         {/* <ul className="nav nav-tabs" id="myTab" role="tablist">
                             <li className="nav-item" role="presentation">
@@ -86,10 +103,17 @@ function EditBook(props) {
                                     <input type="text" name="book_name" className="form-control" onChange={handleInput} value={bookInput.book_name} />
                                     <span className="text-danger">{errorlist.book_name}</span>
                                 </div>
-                                <div className="form-group mb-3 mt-3 ms-3">
-                                    <label className="mb-1">Author Name</label>
-                                    <input type="text" name="author_name" className="form-control" onChange={handleInput} value={bookInput.author_name} />
-                                    <span className="text-danger">{errorlist.author_name}</span>
+                                <div className="row">
+                                    <div className="col-md-5 form-group mb-3 mt-3 ms-3">
+                                        <label className="mb-1">Author Name</label>
+                                        <input type="text" name="author_name" className="form-control" onChange={handleInput} value={bookInput.author_name} />
+                                        <span className="text-danger">{errorlist.author_name}</span>
+                                    </div>
+                                    <div className="col-md-5 form-group mb-3 mt-3 ms-3">
+                                        <label className="mb-1">Publisher Name</label>
+                                        <input type="text" name="publisher_name" className="form-control" onChange={handleInput} value={publisherName} />
+                                        <span className="text-danger">{errorlist.publisher_name}</span>
+                                    </div>
                                 </div>
                                 <div className="form-group mb-3 mt-3 ms-3">
                                     <label className="mb-1">ISBN No.</label>

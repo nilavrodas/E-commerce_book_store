@@ -8,6 +8,8 @@ function StyledNav() {
     const logoutSubmit = (e) => {
         e.preventDefault();
         axios.post('/api/logout').then(res => {
+            console.log('res.data');
+            console.log(res.data);
             if (res.data.status === 200) {
                 localStorage.removeItem('auth_token');
                 localStorage.removeItem('auth_name');
@@ -39,11 +41,8 @@ function StyledNav() {
             </NavDropdown>)
     } else (
         authButtons = (
-            <Nav>
-                <Nav.Link href="/cart">Cart</Nav.Link>
-                <Nav.Link href="/wishlist">Wishlist</Nav.Link>
-                <Button type="submit" onClick={logoutSubmit} className='nav-link btn btn-danger btn-sm text-white'>Logout</Button>
-            </Nav>
+            <Button type="submit" onClick={logoutSubmit} className='nav-link btn btn-danger btn-sm text-white'>Logout</Button>
+
         )
     )
     return (
@@ -57,7 +56,7 @@ function StyledNav() {
                         style={{ maxHeight: '100px' }}
                         navbarScroll
                     >
-                        <Nav.Link href="/home">Home</Nav.Link>
+                        <Nav.Link href="/">Home</Nav.Link>
                         <Nav.Link href="/books">Books</Nav.Link>
 
                         {authButtons}
