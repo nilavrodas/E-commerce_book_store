@@ -57,7 +57,7 @@ function AddBooks() {
     return (
         <div className="container-fluid px-4">
             <div className="card mt-4">
-                <div className="card-header">
+                <div style={{ backgroundColor: "lightblue" }} className="card-header">
                     <h4>Add Books</h4>
                     <Link to="/admin/viewproducts" className="btn btn-primary btn-sm float-end">View Books</Link>
                 </div>
